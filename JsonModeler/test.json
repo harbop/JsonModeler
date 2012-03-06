@@ -1,0 +1,39 @@
+{
+    "accountHolder": "Sean Christmann", 
+    "accounts": [
+                 {
+                 "name": "Checking", 
+                 "index": 1111, 
+                 "balance": 1256.3, 
+                 "active": true, 
+                 "lastTransaction": {
+                 "amount": -613, 
+                 "date": "2010-10-08T14:33:00", 
+                 "checkImage": "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEUAAAD///+l2Z/dAAAACXBIWXMAAAsSAAALEgHS3X78AAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1MzmNZGAwAAABR0RVh0Q3JlYXRpb24gVGltZQAxLzMvMTL4oo11AAAAEElEQVQImWNg+M+AFeEQBgB+vw/xfUUZkgAAAABJRU5ErkJggg=="
+                 }
+                 }, 
+                 {
+                 "name": "IRA", 
+                 "index": 2222, 
+                 "balance": 21040.86, 
+                 "active": true, 
+                 "lastTransaction": {
+                 "amount": 2000, 
+                 "date": "2010-09-21T09:20:00"
+                 }
+                 }, 
+                 {
+                 "name": "Savings", 
+                 "index": 3333, 
+                 "balance": 0, 
+                 "active": false, 
+                 "lastTransaction": null
+                 }
+                 ], 
+    "messages": [
+                 "ID40011", 
+                 "ID40032", 
+                 "ID40087"
+                 ], 
+    "lastUpdated": "2010-10-24T13:25:00"
+}
