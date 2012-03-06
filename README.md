@@ -4,7 +4,7 @@ To define a DMO, you simply create a subclass of NSObject and define the propert
 
 When the deserializer encounters and array, it will need to know they type of the objects in the array.  This is accomplished by overriding 
 
-	(Class) typeOfArrayNamed:(NSString *)arrayName on your DMO.
+	(Class) typeOfArrayNamed:(NSString *)arrayName
 
 To create a Data Model Object (DMO) from JSON, just call
 
