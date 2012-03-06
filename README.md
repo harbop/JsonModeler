@@ -7,9 +7,11 @@ When the deserializer encounters and array, it will need to know they type of th
 More to come soon.
 
 To create a Data Model Object (DMO) from JSON, just call
+
 	Customer *customer = [[Customer alloc] initWithJSON:json];
 
 To create JSON from a DMO:
+
 	NSString *newJson = [customer toJSON];
 
 Defining a DMO is the same as defining any standard object.  At the moment, it works with NSStrings, NSNumbers, NSArrays, NSMutableArrays, other DMOs and all native types (int, unsigned int, long, boolean, double, etc., etc.)   The category (NSObject+JSON) uses the property definitions to determine how to pull code from the parsed JSON dictionaries and arrays.  It also provides a couple of callback so that you map input and output JSON key names differently than the property names.  Just override these two methods on your DMO if  you want to do that:
