@@ -1,6 +1,6 @@
 //
 //  NSObject+JSON.h
-//  nico
+//  
 //
 //  Created by Greg Pasquariello on 3/5/12.
 //  Copyright (c) 2012 BiggerMind Software. All rights reserved.
