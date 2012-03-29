@@ -33,25 +33,20 @@
  **/
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
+
+@interface NSManagedObject (JSON)
+- (id)createInstanceOfClass:(Class)c;
+@end
 
 @interface NSObject (JSON)
-
--(id) initWithJSON:(NSString *)json;
--(id) initWithDictionary:(NSDictionary *)dictionary;
-
-- (NSMutableDictionary *)toDictionary;
+- (id)createInstanceOfClass:(Class)c;
 - (NSString *)toJSON;
+- (NSMutableDictionary *)toJSONDictionary;
+- (void) fromJSON:(NSString *)json;
+- (id) fromJSONDictionary:(NSDictionary *)jsonDictionary;
+- (Class) classForObjectsIn:(NSString *) collectionName;
 
 @end
 
-
-@interface NSArray (JSON)
-
--(id) initWithJSON:(NSString *)json;
--(id) initWithArray:(NSArray *)array ofClass:(Class)class;
-
-- (NSArray *)toArray;
-- (NSString *)toJSON;
-
-@end

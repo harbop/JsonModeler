@@ -45,7 +45,13 @@
     NSString* path = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"json"];
     NSString* json = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
     
-    Customer *customer = [[Customer alloc] initWithJSON:json];
+    //
+    // If you were using CoreData here, you would create your object in a the managed context and then use it 
+    // exactly the same way.
+    //
+    Customer *customer = [[Customer alloc] init];
+    [customer fromJSON: json];
+    
     NSString *newJson = [customer toJSON];
     
     return YES;

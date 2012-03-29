@@ -36,106 +36,30 @@
 #import <objc/runtime.h>
 #import "NSObject+Properties.h"
 
-@implementation NSMutableArray (JSON)
+@implementation NSManagedObject (JSON)
 
-
--(id) initWithJSON:(NSString *)json ofClass:(Class)class {
-    self = [self init];
-    if (self != nil) {
-        NSArray *array = [NSJSONSerialization JSONObjectWithData: [json dataUsingEncoding:NSUTF8StringEncoding] options: NSJSONReadingMutableContainers error:nil];
-        [self fromArray:array ofClass:class];
-    }
-    return self;
+-(id) createInstanceOfClass:(Class)c {
+    NSManagedObject *instance = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass(c) inManagedObjectContext:self.managedObjectContext];
+    return instance;
 }
-
--(id) initWithArray:(NSArray *)source ofClass:class {
-    self = [self init];
-    if (self != nil) {
-        [self fromArray:source ofClass:class];
-    }
-    return self;
-}
-
-
--(id) fromArray:(NSArray *)source ofClass:(Class)class {    
-    if ([class isSubclassOfClass: [NSString class]]) {
-        for (int i=0; i < [source count]; i++) {
-            NSString *s = [source objectAtIndex: i];
-            [self addObject: s];
-        }  
-    }
-    else {
-        for (int i=0; i < [source count]; i++) {
-            NSDictionary *values = [source objectAtIndex: i];
-            id obj = [[class alloc] initWithDictionary: values];
-            [self addObject: obj];
-        }
-    }
-    
-    return self;
-}
-
--(NSString *) toJSON {
-    NSArray *array = [self toArray];
-    NSData *data = [NSJSONSerialization dataWithJSONObject: array options: 0 error:nil];
-    return [[NSString alloc] initWithData: data encoding: NSASCIIStringEncoding];
-}
-
-- (NSArray *)toArray { 
-    NSMutableArray *newArray = [NSMutableArray arrayWithCapacity: [self count]];
-    
-    for(int i=0; i < [self count]; i++) {
-        id object = [self objectAtIndex: i];
-        
-        if ([object isKindOfClass: [NSArray class]]) {
-            NSArray *result = [object toArray];
-            [newArray addObject: result];
-        }
-        else {
-            //
-            // In this case, we just got an array of strings or an array of numbers, not an array of
-            // key/value pairs.
-            //
-            if ([object isKindOfClass: [NSString class]] || [object isKindOfClass: [NSNumber class]]) {
-                [newArray addObject: object];
-            }
-            else {
-                NSObject *result = [object toDictionary];
-                [newArray addObject: result];
-            }
-        }
-    }
-    
-    return newArray;
-}
-
 
 @end
 
 
 @implementation NSObject (JSON)
 
--(id) initWithDictionary:(NSDictionary *)dictionary {
-    self = [self init];
-    if (self != nil) {
-        [self fromDictionary: dictionary];
-    }
-    return self;
+-(id) createInstanceOfClass:(Class)c {
+    id instance = [[c alloc] init];
+    return instance;
 }
 
--(id) initWithJSON:(NSString *)json {
-    self = [self init];
-    
-    if (self != nil) {
-         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData: [json dataUsingEncoding:NSUTF8StringEncoding] options: NSJSONReadingMutableContainers error:nil];
-        
-        [self fromDictionary: dict];
-    }
-    return self;
+-(void) fromJSON:(NSString *)json {
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData: [json dataUsingEncoding:NSUTF8StringEncoding] options: NSJSONReadingMutableContainers error:nil];
+    [self fromJSONDictionary:dict];
 }
 
 
--(id) fromDictionary:(NSDictionary *)dictionary {    
+-(id) fromJSONDictionary:(NSDictionary *)dictionary {    
     NSArray *names = [self propertyNames];
     for (int i=0; i < [names count]; i++) {
         NSString *pname = [names objectAtIndex: i];
@@ -154,14 +78,40 @@
                 [self setValue: [self valueToString: value] forKey: pname];
             } else if (!strcmp(ptype, "T@\"NSNumber\"")) {
                 [self setValue: [self valueToNumber: value] forKey: pname];
-            } else if (!strcmp(ptype, "T@\"NSArray\"")) {
-                Class arrayClass = [self typeOfArrayNamed: pname];
-                NSArray *array = [[NSMutableArray alloc] initWithArray: value ofClass: arrayClass];
-                [self setValue: array forKey: pname];
-            } else if (!strcmp(ptype, "T@\"NSMutableArray\"")) {
-                Class arrayClass = [self typeOfArrayNamed: pname];
-                NSArray *array = [[NSMutableArray alloc] initWithArray: value ofClass: arrayClass];
-                [self setValue: array forKey: pname];
+            } else if (!strcmp(ptype, "T@\"NSArray\"") || !strcmp(ptype, "T@\"NSMutableArray\"") || !strcmp(ptype, "T@\"NSSet\"")) {
+                Class itemClass = [self classForObjectsIn: pname];
+                
+                NSArray *source = (NSArray *)value;
+                NSMutableArray *array = [[NSMutableArray alloc] init];
+                
+                for (int i=0; i < [source count]; i++) {
+                    id obj = nil;
+                    
+                    if ([itemClass isSubclassOfClass: [NSString class]]) {
+                        obj = [self valueToString: [source objectAtIndex:i]];
+                    }
+                    else if ([itemClass isSubclassOfClass: [NSNumber class]]) {
+                        obj = [self valueToNumber: [source objectAtIndex: i]];
+                    }
+                    else {
+                        NSDictionary *values = [source objectAtIndex: i];
+                        
+                        obj = [self createInstanceOfClass: itemClass];
+                        [obj fromJSONDictionary: values];
+                    }
+                    
+                    [array addObject: obj];
+                }
+                
+                if (!strcmp(ptype, "T@\"NSSet\"")) {
+                    NSMutableSet *set = [NSMutableSet setWithArray: array];
+                    [self setValue: set forKey: pname];
+                    [self setValue: array forKey: pname];
+                }
+                else {
+                    [self setValue: array forKey: pname];
+                }
+                
             } else if (!strcmp(ptype, "Ti")) {
                 [self setValue: [self valueToNumber: value] forKey: pname];
             } else if (!strcmp(ptype, "TI")) {
@@ -179,7 +129,8 @@
             } else {
                 NSString *className = [self classFromPropertyTypeString: [NSString stringWithUTF8String: ptype]];
                 Class class = NSClassFromString(className);
-                id object = [[[class alloc] init] fromDictionary: value];
+                id object = [self createInstanceOfClass: class];
+                [object fromJSONDictionary: value];
                 [self setValue:object forKey:pname];
             }
         }
@@ -189,12 +140,12 @@
 }
 
 -(NSString *) toJSON {
-    NSMutableDictionary *dictionary = [self toDictionary];
+    NSMutableDictionary *dictionary = [self toJSONDictionary];
     NSData *data = [NSJSONSerialization dataWithJSONObject: dictionary options: 0 error:nil];
     return [[NSString alloc] initWithData: data encoding: NSASCIIStringEncoding];
 }
 
-- (NSMutableDictionary *)toDictionary {    
+- (NSMutableDictionary *)toJSONDictionary {    
     NSArray *pnames = [self propertyNames];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity: [pnames count]];
@@ -213,14 +164,39 @@
             [dict setValue: [self valueForKey: pname] forKey: key];
         } else if (!strcmp(ptype, "T@\"NSNumber\"")) {
             [dict setValue: [self valueForKey: pname] forKey: key];
-        } else if (!strcmp(ptype, "T@\"NSArray\"")) {
-            NSArray *objectArray = [self valueForKey: pname];
-            NSArray *newArray = [objectArray toArray];
-            [dict setValue: newArray forKey: key];
-        } else if (!strcmp(ptype, "T@\"NSMutableArray\"")) {
-            NSArray *objectArray = [self valueForKey: pname];
-            NSMutableArray *newArray = [NSMutableArray arrayWithArray: [objectArray toArray]];
-            [dict setValue: newArray forKey: key];
+        } else if (!strcmp(ptype, "T@\"NSArray\"") || !strcmp(ptype, "T@\"NSMutableArray\"") || !strcmp(ptype, "T@\"NSSet\"")) {
+            Class itemClass = [self classForObjectsIn: pname];
+
+            NSArray *objectArray = nil;
+            
+            if (!strcmp(ptype, "T@\"NSSet\"")) {
+                NSSet *set = [self valueForKey: pname];
+                objectArray = [set allObjects];
+            }
+            else {
+                objectArray = [self valueForKey: pname];
+            }
+            
+            NSMutableArray *jsonArray = [NSMutableArray arrayWithCapacity: [objectArray count]];
+
+                
+            for(int i=0; i < [objectArray count]; i++) {
+                if ([itemClass isSubclassOfClass:[NSString class]]) {
+                    NSString *s = [objectArray objectAtIndex: i];
+                    [jsonArray addObject: s];
+                }
+                else if ([itemClass isSubclassOfClass:[NSNumber class]]) {
+                    NSNumber *n = [objectArray objectAtIndex: i];
+                    [jsonArray addObject: n];
+                }
+                else {
+                    id obj = [objectArray objectAtIndex:i];
+                    NSDictionary *objDict = [obj toJSONDictionary];
+                    [jsonArray addObject: objDict];
+                }
+            }
+            
+            [dict setValue: jsonArray forKey: key];
         } else if (!strcmp(ptype, "Ti")) {
             [dict setValue: [self valueForKey: pname] forKey: key];  
         } else if (!strcmp(ptype, "TI")) {
@@ -237,7 +213,7 @@
             [dict setValue: [self valueForKey: pname] forKey: key];
         } else {
             id object = [self valueForKey: pname];
-            [dict setValue: [object toDictionary] forKey:pname];
+            [dict setValue: [object toJSONDictionary] forKey:pname];
         }
     }
     
@@ -301,7 +277,7 @@
 }
 
 
-- (Class) typeOfArrayNamed:(NSString *)arrayName {
+- (Class) classForObjectsIn:(NSString *)collectionName {
     return nil;
 }
 

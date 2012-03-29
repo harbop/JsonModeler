@@ -10,6 +10,10 @@
 		3766DA7E150674E40029B927 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3766DA7D150674E40029B927 /* Customer.m */; };
 		3766DA831506751F0029B927 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 3766DA801506751F0029B927 /* Account.m */; };
 		3766DA841506751F0029B927 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 3766DA821506751F0029B927 /* Transaction.m */; };
+		37BB6C811523D9220009412F /* NSObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 37BB6C7C1523D9220009412F /* NSObject+JSON.m */; };
+		37BB6C821523D9220009412F /* NSObject+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = 37BB6C7E1523D9220009412F /* NSObject+Properties.m */; };
+		37BB6C831523D9220009412F /* NSString+PropertyKVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 37BB6C801523D9220009412F /* NSString+PropertyKVC.m */; };
+		37BB6C851523D9DB0009412F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37BB6C841523D9DB0009412F /* CoreData.framework */; };
 		37E67361150671F20001376D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E67360150671F20001376D /* UIKit.framework */; };
 		37E67363150671F20001376D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E67362150671F20001376D /* Foundation.framework */; };
 		37E67365150671F20001376D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E67364150671F20001376D /* CoreGraphics.framework */; };
@@ -19,9 +23,6 @@
 		37E67374150671F20001376D /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37E67372150671F20001376D /* MainStoryboard_iPhone.storyboard */; };
 		37E67377150671F20001376D /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37E67375150671F20001376D /* MainStoryboard_iPad.storyboard */; };
 		37E6737A150671F20001376D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E67379150671F20001376D /* ViewController.m */; };
-		37E67387150672370001376D /* NSObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E67382150672370001376D /* NSObject+JSON.m */; };
-		37E67388150672370001376D /* NSObject+Properties.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E67384150672370001376D /* NSObject+Properties.m */; };
-		37E67389150672370001376D /* NSString+PropertyKVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E67386150672370001376D /* NSString+PropertyKVC.m */; };
 		37E67396150672890001376D /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = 37E67395150672890001376D /* test.json */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,13 @@
 		3766DA801506751F0029B927 /* Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account.m; sourceTree = "<group>"; };
 		3766DA811506751F0029B927 /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
 		3766DA821506751F0029B927 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
+		37BB6C7B1523D9220009412F /* NSObject+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JSON.h"; sourceTree = "<group>"; };
+		37BB6C7C1523D9220009412F /* NSObject+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JSON.m"; sourceTree = "<group>"; };
+		37BB6C7D1523D9220009412F /* NSObject+Properties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Properties.h"; sourceTree = "<group>"; };
+		37BB6C7E1523D9220009412F /* NSObject+Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Properties.m"; sourceTree = "<group>"; };
+		37BB6C7F1523D9220009412F /* NSString+PropertyKVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PropertyKVC.h"; sourceTree = "<group>"; };
+		37BB6C801523D9220009412F /* NSString+PropertyKVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PropertyKVC.m"; sourceTree = "<group>"; };
+		37BB6C841523D9DB0009412F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		37E6735C150671F20001376D /* JsonModeler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JsonModeler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37E67360150671F20001376D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		37E67362150671F20001376D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -46,12 +54,6 @@
 		37E67376150671F20001376D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		37E67378150671F20001376D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		37E67379150671F20001376D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		37E67381150672370001376D /* NSObject+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JSON.h"; sourceTree = "<group>"; };
-		37E67382150672370001376D /* NSObject+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JSON.m"; sourceTree = "<group>"; };
-		37E67383150672370001376D /* NSObject+Properties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Properties.h"; sourceTree = "<group>"; };
-		37E67384150672370001376D /* NSObject+Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Properties.m"; sourceTree = "<group>"; };
-		37E67385150672370001376D /* NSString+PropertyKVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PropertyKVC.h"; sourceTree = "<group>"; };
-		37E67386150672370001376D /* NSString+PropertyKVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PropertyKVC.m"; sourceTree = "<group>"; };
 		37E67395150672890001376D /* test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -60,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37BB6C851523D9DB0009412F /* CoreData.framework in Frameworks */,
 				37E67361150671F20001376D /* UIKit.framework in Frameworks */,
 				37E67363150671F20001376D /* Foundation.framework in Frameworks */,
 				37E67365150671F20001376D /* CoreGraphics.framework in Frameworks */,
@@ -69,9 +72,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		37BB6C7A1523D9220009412F /* JsonModelLibrary */ = {
+			isa = PBXGroup;
+			children = (
+				37BB6C7B1523D9220009412F /* NSObject+JSON.h */,
+				37BB6C7C1523D9220009412F /* NSObject+JSON.m */,
+				37BB6C7D1523D9220009412F /* NSObject+Properties.h */,
+				37BB6C7E1523D9220009412F /* NSObject+Properties.m */,
+				37BB6C7F1523D9220009412F /* NSString+PropertyKVC.h */,
+				37BB6C801523D9220009412F /* NSString+PropertyKVC.m */,
+			);
+			name = JsonModelLibrary;
+			path = JsonModeler/JsonModelLibrary;
+			sourceTree = "<group>";
+		};
 		37E67351150671F10001376D = {
 			isa = PBXGroup;
 			children = (
+				37BB6C7A1523D9220009412F /* JsonModelLibrary */,
 				37E67366150671F20001376D /* JsonModeler */,
 				37E6735F150671F20001376D /* Frameworks */,
 				37E6735D150671F20001376D /* Products */,
@@ -89,6 +107,7 @@
 		37E6735F150671F20001376D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				37BB6C841523D9DB0009412F /* CoreData.framework */,
 				37E67360150671F20001376D /* UIKit.framework */,
 				37E67362150671F20001376D /* Foundation.framework */,
 				37E67364150671F20001376D /* CoreGraphics.framework */,
@@ -100,7 +119,6 @@
 			isa = PBXGroup;
 			children = (
 				37E6738E150672670001376D /* DataModel */,
-				37E67380150672370001376D /* Library */,
 				37E6736F150671F20001376D /* AppDelegate.h */,
 				37E67370150671F20001376D /* AppDelegate.m */,
 				37E67372150671F20001376D /* MainStoryboard_iPhone.storyboard */,
@@ -121,19 +139,6 @@
 				37E6736E150671F20001376D /* JsonModeler-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		37E67380150672370001376D /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				37E67381150672370001376D /* NSObject+JSON.h */,
-				37E67382150672370001376D /* NSObject+JSON.m */,
-				37E67383150672370001376D /* NSObject+Properties.h */,
-				37E67384150672370001376D /* NSObject+Properties.m */,
-				37E67385150672370001376D /* NSString+PropertyKVC.h */,
-				37E67386150672370001376D /* NSString+PropertyKVC.m */,
-			);
-			path = Library;
 			sourceTree = "<group>";
 		};
 		37E6738E150672670001376D /* DataModel */ = {
@@ -218,12 +223,12 @@
 				37E6736D150671F20001376D /* main.m in Sources */,
 				37E67371150671F20001376D /* AppDelegate.m in Sources */,
 				37E6737A150671F20001376D /* ViewController.m in Sources */,
-				37E67387150672370001376D /* NSObject+JSON.m in Sources */,
-				37E67388150672370001376D /* NSObject+Properties.m in Sources */,
-				37E67389150672370001376D /* NSString+PropertyKVC.m in Sources */,
 				3766DA7E150674E40029B927 /* Customer.m in Sources */,
 				3766DA831506751F0029B927 /* Account.m in Sources */,
 				3766DA841506751F0029B927 /* Transaction.m in Sources */,
+				37BB6C811523D9220009412F /* NSObject+JSON.m in Sources */,
+				37BB6C821523D9220009412F /* NSObject+Properties.m in Sources */,
+				37BB6C831523D9220009412F /* NSString+PropertyKVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

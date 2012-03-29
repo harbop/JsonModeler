@@ -48,13 +48,13 @@
     return name;
 }
 
--(Class) typeOfArrayNamed:(NSString *)arrayName {
-    Class c = nil;
+-(Class) classForObjectsIn:(NSString *)collectionName {
+    Class c = [super classForObjectsIn: collectionName];
     
-    if ([arrayName isEqualToString: @"accounts"]) {
+    if ([collectionName isEqualToString: @"accounts"]) {
         c = [Account class];
     }
-    else if ([arrayName isEqualToString: @"messages"]) {
+    else if ([collectionName isEqualToString: @"messages"]) {
         c = [NSString class];
     }
     
