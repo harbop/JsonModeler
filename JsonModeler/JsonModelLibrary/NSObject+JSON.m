@@ -77,7 +77,10 @@
                 [self setValue: [self valueToString: value] forKey: pname];
             } else if ([ptype isEqualToString: @"T@\"NSNumber\""]) {
                 [self setValue: [self valueToNumber: value] forKey: pname];
-            } else if ([ptype isEqualToString: @"T@\"NSArray\""] || [ptype isEqualToString: @"T@\"NSMutableArray\""] || [ptype isEqualToString: @"T@\"NSSet\""]) {
+            } else if ([ptype isEqualToString: @"T@\"NSArray\""] 
+                       || [ptype isEqualToString: @"T@\"NSMutableArray\""] 
+                       || [ptype isEqualToString: @"T@\"NSSet\""] 
+                       || [ptype isEqualToString: @"T@\"NSOrderedSet\""]) {
                 Class itemClass = [self classForObjectsIn: pname];
                 
                 NSArray *source = (NSArray *)value;
@@ -104,6 +107,10 @@
                 
                 if ([ptype isEqualToString: @"T@\"NSSet\""]) {
                     NSMutableSet *set = [NSMutableSet setWithArray: array];
+                    [self setValue: set forKey: pname];
+                }
+                else if ([ptype isEqualToString: @"T@\"NSOrderedSet\""]) {
+                    NSMutableOrderedSet *set = [NSMutableOrderedSet orderedSetWithArray: array];
                     [self setValue: set forKey: pname];
                 }
                 else {
@@ -158,16 +165,19 @@
             key = pname;
         }
         
-        if ([pname isEqualToString: @"T@\"NSString\""]) {
+        if ([ptype isEqualToString: @"T@\"NSString\""]) {
             [dict setValue: [self valueForKey: pname] forKey: key];
-        } else if ([pname isEqualToString: @"T@\"NSNumber\""]) {
+        } else if ([ptype isEqualToString: @"T@\"NSNumber\""]) {
             [dict setValue: [self valueForKey: pname] forKey: key];
-        } else if ([pname isEqualToString: @"T@\"NSArray\""] || [pname isEqualToString: @"T@\"NSMutableArray\""] || [pname isEqualToString: @"T@\"NSSet\""]) {
+        } else if ([ptype isEqualToString: @"T@\"NSArray\""] 
+                   || [ptype isEqualToString: @"T@\"NSMutableArray\""] 
+                   || [ptype isEqualToString: @"T@\"NSSet\""]
+                   || [ptype isEqualToString: @"T@\"NSOrderedSet\""]) {
             Class itemClass = [self classForObjectsIn: pname];
-
+            
             NSArray *objectArray = nil;
             
-            if ([pname isEqualToString: @"T@\"NSSet\""]) {
+            if ([ptype isEqualToString: @"T@\"NSSet\""] || [ptype isEqualToString: @"T@\"NSOrderedSet\""]) {
                 NSSet *set = [self valueForKey: pname];
                 objectArray = [set allObjects];
             }
@@ -176,8 +186,8 @@
             }
             
             NSMutableArray *jsonArray = [NSMutableArray arrayWithCapacity: [objectArray count]];
-
-                
+            
+            
             for(int i=0; i < [objectArray count]; i++) {
                 if ([itemClass isSubclassOfClass:[NSString class]]) {
                     NSString *s = [objectArray objectAtIndex: i];
@@ -195,19 +205,19 @@
             }
             
             [dict setValue: jsonArray forKey: key];
-        } else if ([pname isEqualToString: @"Ti"]) {
+        } else if ([ptype isEqualToString: @"Ti"]) {
             [dict setValue: [self valueForKey: pname] forKey: key];  
-        } else if ([pname isEqualToString: @"TI"]) {
+        } else if ([ptype isEqualToString: @"TI"]) {
             [dict setValue: [self valueForKey: pname] forKey: key];
-        } else if ([pname isEqualToString: @"Tl"]) {
+        } else if ([ptype isEqualToString: @"Tl"]) {
             [dict setValue: [self valueForKey: pname] forKey: key];
-        } else if ([pname isEqualToString: @"TL"]) {
+        } else if ([ptype isEqualToString: @"TL"]) {
             [dict setValue: [self valueForKey: pname] forKey: key];
-        } else if ([pname isEqualToString: @"Td"]) {
+        } else if ([ptype isEqualToString: @"Td"]) {
             [dict setValue: [self valueForKey: pname] forKey: key];
-        } else if ([pname isEqualToString: @"Tf"]) {
+        } else if ([ptype isEqualToString: @"Tf"]) {
             [dict setValue: [self valueForKey: pname] forKey: key];
-        } else if ([pname isEqualToString: @"TB"]) {
+        } else if ([ptype isEqualToString: @"TB"]) {
             [dict setValue: [self valueForKey: pname] forKey: key];
         } else {
             id object = [self valueForKey: pname];
@@ -217,6 +227,7 @@
     
     return dict;
 }
+
 
 
 - (NSString *) classFromPropertyTypeString:(NSString *)typeString {
