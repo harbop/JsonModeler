@@ -51,6 +51,8 @@
     if ([jsonData isKindOfClass: [NSArray class]]) {
         NSArray *jsonArray = (NSArray *)jsonData;
         
+        result = [NSMutableArray arrayWithCapacity: [jsonArray count]];
+
         for (NSDictionary *data in jsonArray) {
             NSManagedObject *instance = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass(self) inManagedObjectContext: context];
             [instance fromJSONDictionary: data];
