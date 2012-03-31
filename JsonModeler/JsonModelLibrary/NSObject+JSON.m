@@ -43,10 +43,55 @@
     return instance;
 }
 
++(NSMutableArray *) arrayOfObjectsFromJSON:(NSString *)json inManagedObjectContext:(NSManagedObjectContext *) context {
+    NSMutableArray *result = nil;
+    
+    id jsonData = [NSJSONSerialization JSONObjectWithData: [json dataUsingEncoding:NSUTF8StringEncoding] options: NSJSONReadingMutableContainers error:nil];
+    
+    if ([jsonData isKindOfClass: [NSArray class]]) {
+        NSArray *jsonArray = (NSArray *)jsonData;
+        
+        for (NSDictionary *data in jsonArray) {
+            NSManagedObject *instance = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass(self) inManagedObjectContext: context];
+            [instance fromJSONDictionary: data];
+            [result addObject: instance];
+        }
+    }
+    
+    return result;
+}
+
 @end
 
 
 @implementation NSObject (JSON)
+
++(NSMutableArray *) arrayOfObjectsFromJSON:(NSString *)json {
+    NSMutableArray *result = nil;
+    
+    id jsonData = [NSJSONSerialization JSONObjectWithData: [json dataUsingEncoding:NSUTF8StringEncoding] options: NSJSONReadingMutableContainers error:nil];
+    
+    if ([jsonData isKindOfClass: [NSArray class]]) {
+        NSArray *jsonArray = (NSArray *)jsonData;
+        
+        result = [NSMutableArray arrayWithCapacity: [jsonArray count]];
+        
+        for (NSDictionary *data in jsonArray) {
+            id obj = [NSObject createInstanceOfClass: self];
+            [obj fromJSONDictionary: data];
+            [result addObject: obj];
+        }
+    }
+    
+    return result;
+}
+
+-(id) initWithJSON:(NSString *) json {
+    if (self != nil) {
+        [self fromJSON: json];
+    }
+    return self;
+}
 
 -(id) createInstanceOfClass:(Class)c {
     id instance = [[c alloc] init];
@@ -54,8 +99,11 @@
 }
 
 -(void) fromJSON:(NSString *)json {
-    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData: [json dataUsingEncoding:NSUTF8StringEncoding] options: NSJSONReadingMutableContainers error:nil];
-    [self fromJSONDictionary:dict];
+    id jsonData = [NSJSONSerialization JSONObjectWithData: [json dataUsingEncoding:NSUTF8StringEncoding] options: NSJSONReadingMutableContainers error:nil];
+    if ([jsonData isKindOfClass: [NSDictionary class]]) {
+        NSDictionary *dict = (NSDictionary *)jsonData;
+        [self fromJSONDictionary:dict];
+    }
 }
 
 

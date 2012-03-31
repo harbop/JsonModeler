@@ -49,9 +49,9 @@
     // If you were using CoreData here, you would create your object in a the managed context and then use it 
     // exactly the same way.
     //
-    Customer *customer = [[Customer alloc] init];
-    [customer fromJSON: json];
+    NSArray *customerList = [Customer arrayOfObjectsFromJSON: json];
     
+    Customer *customer = [[Customer alloc] initWithJSON: json];    
     NSString *newJson = [customer toJSON];
     
     return YES;

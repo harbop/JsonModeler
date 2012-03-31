@@ -37,16 +37,16 @@
 
 
 @interface NSManagedObject (JSON)
-- (id)createInstanceOfClass:(Class)c;
++ (NSMutableArray *) arrayOfObjectsFromJSON:(NSString *)json inManagedObjectContext:(NSManagedObjectContext *) context;
 @end
 
 @interface NSObject (JSON)
-- (id)createInstanceOfClass:(Class)c;
++ (NSMutableArray *) arrayOfObjectsFromJSON:(NSString *)json;
+- (id) initWithJSON:(NSString *) json;
 - (NSString *)toJSON;
 - (NSMutableDictionary *)toJSONDictionary;
 - (void) fromJSON:(NSString *)json;
 - (id) fromJSONDictionary:(NSDictionary *)jsonDictionary;
 - (Class) classForObjectsIn:(NSString *) collectionName;
-
 @end
 
