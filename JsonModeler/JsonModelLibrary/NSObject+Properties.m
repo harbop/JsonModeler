@@ -162,6 +162,7 @@
 	for ( i = 0; i < count; i++ )
 		[list addObject: [NSString stringWithUTF8String: property_getName(properties[i])]];
 	
+    free( properties );
 	return [list copy];
 }
 
